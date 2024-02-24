@@ -50,16 +50,15 @@ To set up the development environment for DebianDuke, follow these steps:
 3. Run the Duke Builder Container: Once the container is built, run the following command to start the Duke Builder container:
 
    ```shell
-  docker run --name duke-builder --privileged -d duke-builder
+   docker run --name duke-builder --privileged -d duke-builder
    ```
 
 By following these steps, you will have set up the development environment for DebianDuke using Docker.
 
-## How to build manually
+## Build DebianDuke duke.hybrid.iso
 
-docker cp duke duke-builder:/duke
+This code block demonstrates how to build the project manually. It first cleans any existing build artifacts using the `make clean` command, and then builds the project using the `make all` command.
 
-docker exec -it duke-builder /bin/bash -c "cd /duke && lb clean && lb config && lb build"
-
-docker cp duke-builder:/duke/live-image-amd64.hybrid.iso ./dist
-
+```shell
+make clean && make all
+```

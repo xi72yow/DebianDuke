@@ -37,4 +37,4 @@ remove-image: stop-and-remove-container
 clean: remove-image
 	
 # Build the Duke ISO
-all: clean move clean 
+all: move clean 
