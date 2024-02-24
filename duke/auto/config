@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+lb config noauto \
+     -a amd64 \
+     --distribution bookworm \
+     --linux-flavours "amd64" \
+     --archive-areas "main contrib non-free" \
+     --backports true \
+     --bootappend-live "boot=live components locales=de_DE.UTF-8 keyboard-layouts=de hostname=debianduke username=duke" \
+     --updates true \
+     --security true \
+     --cache true \
+     --debian-installer live \
+     --debian-installer-gui true \
+     --iso-volume "duke" \
+     --iso-application "duke" \
+     --iso-publisher "xi72yow" \
+     --iso-preparer "xi72yow" \
+     "${@}"

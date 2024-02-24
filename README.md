@@ -50,15 +50,16 @@ To set up the development environment for DebianDuke, follow these steps:
 3. Run the Duke Builder Container: Once the container is built, run the following command to start the Duke Builder container:
 
    ```shell
-   docker run -h duke-builder --privileged -p 2222:22 --restart=always -d duke-builder
+  docker run --name duke-builder --privileged -d duke-builder
    ```
-
-4. Access the Duke Builder Container: To access the Duke Builder container via SSH, run the following command:
-
-   ```shell
-   ssh root@0.0.0.0 -p 2222
-   ```
-
-   Note: Use the Password `root123`
 
 By following these steps, you will have set up the development environment for DebianDuke using Docker.
+
+## How to build manually
+
+docker cp duke duke-builder:/duke
+
+docker exec -it duke-builder /bin/bash -c "cd /duke && lb clean && lb config && lb build"
+
+docker cp duke-builder:/duke/live-image-amd64.hybrid.iso ./dist
+
