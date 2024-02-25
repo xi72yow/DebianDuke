@@ -4,11 +4,11 @@ set -e
 
 lb config noauto \
      -a amd64 \
-     --distribution bookworm \
+     --distribution trixie \
      --linux-flavours "amd64" \
      --archive-areas "main contrib non-free" \
      --backports true \
-     --bootappend-live "boot=live components locales=de_DE.UTF-8 keyboard-layouts=de hostname=debianduke username=duke" \
+     --bootappend-live "boot=live components locales=de_DE.UTF-8 keyboard-layouts=de hostname=debiantrixie username=duke" \
      --updates true \
      --security true \
      --cache true \

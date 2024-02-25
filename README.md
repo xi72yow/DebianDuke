@@ -2,7 +2,7 @@
 
 ## Roadmap
 
-- [ ] Debian 12 Live ISO
+- [x] Debian 12 Live ISO
 - [ ] Hyprland installation
 - [ ] Hyperland basic setup
   - [ ] Gnome like task bar
