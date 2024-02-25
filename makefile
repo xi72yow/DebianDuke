@@ -1,5 +1,38 @@
 # Makefile for DebianDuke
 
+# Determine Version from conventional commits messages since last version
+LAST_VERSION = $(shell cat version.txt)
+COMMITS = $(shell git log --oneline $(LAST_VERSION)..HEAD)
+VERSION_BUMP_TYPE = $(shell echo $(COMMITS) | grep -q "!" && echo "major" || (echo $(COMMITS) | grep -q "feat" && echo "minor" || echo "patch"))
+
+ifeq ($(VERSION_BUMP_TYPE), major)
+	NEW_VERSION = $(shell echo $(LAST_VERSION) | awk -F. -v OFS=. '{print $$1 + 1, 0, 0}')
+endif
+ifeq ($(VERSION_BUMP_TYPE), minor)
+	NEW_VERSION = $(shell echo $(LAST_VERSION) | awk -F. -v OFS=. '{print $$1, $$2 + 1, 0}')
+endif
+ifeq ($(VERSION_BUMP_TYPE), patch)
+	NEW_VERSION = $(shell echo $(LAST_VERSION) | awk -F. -v OFS=. '{print $$1, $$2, $$3 + 1}')
+endif
+
+debug:
+	@echo "Last Version: $(LAST_VERSION)"
+	@echo "Commits: $(COMMITS)"
+	@echo "Version Bump Type: $(VERSION_BUMP_TYPE)"
+	@echo "New Version: $(NEW_VERSION)"
+
+set-version:
+	git tag $(NEW_VERSION)
+	echo $(NEW_VERSION) > version.txt
+
+release: set-version
+	@read -p "Are you sure you want to push the new version? (y/n) " answer; \
+	if [ "$$answer" != "y" ]; then \
+		echo "Push cancelled."; \
+	else \
+		git push origin $(NEW_VERSION); \
+	fi
+
 # Build the Duke Builder Container
 build-duke-builder:
 	docker build -t duke-builder -f duke-builder.dockerfile .
