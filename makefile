@@ -46,11 +46,11 @@ copy-config: run-duke-builder
 	docker cp ./duke duke-builder:/
 
 # Build the Duke ISO
-build: copy-config
+build-iso: copy-config
 	docker exec -t duke-builder /bin/bash -c "cd /duke && lb clean && lb config && lb build"
 
 # Copy the Duke ISO out of the Duke Builder Container & Copy build logs & generated config files
-move: build
+move: build-iso
 	docker cp duke-builder:/duke/live-image-amd64.hybrid.iso ./dist/duke.hybrid.iso
 	docker cp duke-builder:/duke/build.log ./dist/build.log
 	docker cp duke-builder:/duke/config/bootstrap ./duke/config/bootstrap
